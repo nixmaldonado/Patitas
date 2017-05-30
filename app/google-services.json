@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "564194372740",
+    "firebase_url": "https://patitas-5616e.firebaseio.com",
+    "project_id": "patitas-5616e",
+    "storage_bucket": "patitas-5616e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564194372740:android:69289ff037456a15",
+        "android_client_info": {
+          "package_name": "com.example.patitas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "564194372740-cjqrttjdl7ff9us2cmr0asmnl0m9gdu4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.patitas",
+            "certificate_hash": "ac403f098a7934eefa2c8c222aab4ce6e3f5078e"
+          }
+        },
+        {
+          "client_id": "564194372740-1bupmae15m56niid3qpsqrlu2sbq324p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwa3wYzM8vAjDoQLZfekXZk36N2xlAetU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "564194372740-1bupmae15m56niid3qpsqrlu2sbq324p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

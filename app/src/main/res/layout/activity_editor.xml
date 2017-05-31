@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.patitas.EditorActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.patitas.EditorActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -16,34 +15,46 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+    <ImageView
+        android:id="@+id/image_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4" />
+
+    <ImageButton
+        android:id="@+id/delete_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@mipmap/ic_cancel"
+        android:elevation="4dp"
+        android:visibility="invisible" />
+
 
     <LinearLayout
-        android:id="@+id/camera_input"
-        android:padding="16dp"
+        android:id="@+id/gallery_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
 
         <ImageButton
-            android:layout_gravity="center"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_gravity="center"
             android:background="@mipmap/ic_image" />
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:gravity="center"
             android:text="Elegir una foto"
-            android:textSize="@dimen/text_size"
-            android:gravity="center"/>
+            android:textSize="@dimen/text_size" />
 
     </LinearLayout>
-
-        <ImageView
-            android:layout_weight="4"
-            android:id="@+id/image_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -51,11 +62,11 @@
 
         <EditText
             android:id="@+id/name_input"
-            android:layout_margin="8dp"
-            android:hint="Nombre"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:hint="Nombre" />
 
     </android.support.design.widget.TextInputLayout>
 

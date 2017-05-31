@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class EditorActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    LinearLayout cameraButton;
+    LinearLayout galleryButton;
     ImageView imagePreview;
     EditText nameInput;
     private DatabaseReference petsDatabaseReference;
@@ -31,13 +32,15 @@ public class EditorActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private int RC_PHOTO_PICKER = 1;
     private Uri selectedImageUri;
+    private ImageButton cancelImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
-        cameraButton = (LinearLayout) findViewById(R.id.camera_input);
-        cameraButton.setOnClickListener(new View.OnClickListener() {
+        galleryButton = (LinearLayout) findViewById(R.id.gallery_input);
+
+        galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -46,6 +49,17 @@ public class EditorActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
             }
         });
+
+        cancelImage = (ImageButton) findViewById(R.id.delete_image);
+        cancelImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePreview.setImageDrawable(null);
+                galleryButton.setVisibility(View.VISIBLE);
+                cancelImage.setVisibility(View.INVISIBLE);
+            }
+        });
+
         nameInput = (EditText) findViewById(R.id.name_input);
         imagePreview = (ImageView) findViewById(R.id.image_input);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -91,6 +105,8 @@ public class EditorActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             selectedImageUri = data.getData();
             Glide.with(this).load(selectedImageUri).into(imagePreview);
+            galleryButton.setVisibility(View.GONE);
+            cancelImage.setVisibility(View.VISIBLE);
         }
     }
 
@@ -106,6 +122,7 @@ public class EditorActivity extends AppCompatActivity {
                 Pet pet = new Pet(nameInput.getText().toString(),
                                   taskSnapshot.getDownloadUrl().toString());
                 petsDatabaseReference.push().setValue(pet);
+                finish();
             }
         });
 

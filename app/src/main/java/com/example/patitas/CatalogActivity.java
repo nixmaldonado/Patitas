@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -26,8 +26,6 @@ public class CatalogActivity extends AppCompatActivity {
     private ChildEventListener childEventListener;
     private ProgressBar progressBar;
 
-    private ListView petList;
-    private LinearLayoutManager linearLayoutManager;
     private PetAdapter petAdapter;
 
     @Override
@@ -47,9 +45,7 @@ public class CatalogActivity extends AppCompatActivity {
         });
 
 
-        petList = (ListView) findViewById(R.id.pet_list);
-        linearLayoutManager = new LinearLayoutManager(this);
-
+        ListView petList = (ListView) findViewById(R.id.pet_list);
         List<Pet> pets = new ArrayList<>();
         petAdapter = new PetAdapter(this, R.layout.pet_item, pets);
 
@@ -62,6 +58,14 @@ public class CatalogActivity extends AppCompatActivity {
 
         attachDatabaseReadListener();
 
+
+        petList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent petItemIntent = new Intent(CatalogActivity.this, DetailActivity.class);
+                petAdapter.getItem(position);
+            }
+        });
     }
 
     private void attachDatabaseReadListener() {

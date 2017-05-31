@@ -22,12 +22,14 @@ public class PetAdapter extends ArrayAdapter<Pet> {
         if (convertView == null) {
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.pet_item, parent, false);
         }
+
         ImageView petImage = (ImageView) convertView.findViewById(R.id.pet_image);
         TextView petName = (TextView) convertView.findViewById(R.id.pet_name);
 
         Pet pet = getItem(position);
 
         petName.setText(pet.getName());
+
         Glide.with(petImage.getContext())
                 .load(pet.getPhotoUrl())
                 .into(petImage);

@@ -21,8 +21,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.concurrent.Executor;
-
 public class EditorActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     LinearLayout cameraButton;
@@ -33,7 +31,6 @@ public class EditorActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private int RC_PHOTO_PICKER = 1;
     private Uri selectedImageUri;
-    private static Uri downloadUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,29 +68,23 @@ public class EditorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_save:
-                savePet();
+                if (hasRequiredInput()) savePet();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     private void savePet() {
-        if(hasRequiredInput()){
-            uploadImage();
-            Pet pet = new Pet(nameInput.getText().toString(), downloadUrl.toString());
-            petsDatabaseReference.push().setValue(pet);
-            return;
-        }
+        if (!uploadPet()) throw new CannotSaveException();
     }
 
     private boolean hasRequiredInput() {
-        if(nameInput == null) {
+        if(nameInput.getText().toString().isEmpty()) {
             Toast.makeText(EditorActivity.this, R.string.provide_name,Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -102,16 +93,23 @@ public class EditorActivity extends AppCompatActivity {
             Glide.with(this).load(selectedImageUri).into(imagePreview);
         }
     }
-    private void uploadImage() {
-        if(hasImageUri()){
-            StorageReference photoRef = storageReference.child(selectedImageUri.getLastPathSegment());
-            photoRef.putFile(selectedImageUri).addOnSuccessListener((Executor) this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @SuppressWarnings("VisibleForTests") @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    downloadUrl = taskSnapshot.getDownloadUrl();
-                }
-            });
+
+    private boolean uploadPet() {
+        if(!hasImageUri()){
+            return false;
         }
+
+        StorageReference photoRef = storageReference.child(selectedImageUri.getLastPathSegment());
+        photoRef.putFile(selectedImageUri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @SuppressWarnings("VisibleForTests") @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Pet pet = new Pet(nameInput.getText().toString(),
+                                  taskSnapshot.getDownloadUrl().toString());
+                petsDatabaseReference.push().setValue(pet);
+            }
+        });
+
+        return true;
     }
 
     private boolean hasImageUri() {
@@ -119,6 +117,11 @@ public class EditorActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private class CannotSaveException extends RuntimeException
+    {
+
     }
 }
 

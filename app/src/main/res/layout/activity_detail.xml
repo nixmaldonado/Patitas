@@ -20,24 +20,25 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ImageView
-            android:scaleType="centerCrop"
-            android:layout_weight="2"
+            android:id="@+id/detail_image"
             android:layout_width="match_parent"
-            android:layout_height="56dp" />
+            android:layout_height="56dp"
+            android:layout_weight="2"
+            android:scaleType="centerCrop" />
+
         <TextView
+            android:id="@+id/detail_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
-            android:textSize="@dimen/text_size"
-            android:text="Panchito"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

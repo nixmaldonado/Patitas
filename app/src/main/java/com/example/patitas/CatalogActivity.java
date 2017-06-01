@@ -118,7 +118,6 @@ public class CatalogActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         detachDatabaseReadListener();
-        petAdapter.clear();
     }
 
     private void detachDatabaseReadListener() {

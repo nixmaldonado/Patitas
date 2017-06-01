@@ -32,7 +32,7 @@ public class EditorActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private int RC_PHOTO_PICKER = 1;
     private Uri selectedImageUri;
-    private ImageButton cancelImage;
+    private ImageButton editImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +50,17 @@ public class EditorActivity extends AppCompatActivity {
             }
         });
 
-        cancelImage = (ImageButton) findViewById(R.id.delete_image);
-        cancelImage.setOnClickListener(new View.OnClickListener() {
+        editImage = (ImageButton) findViewById(R.id.edit_image);
+        editImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imagePreview.setImageDrawable(null);
-                galleryButton.setVisibility(View.VISIBLE);
-                cancelImage.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/jpeg");
+                intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER);
             }
         });
+
 
         nameInput = (EditText) findViewById(R.id.name_input);
         imagePreview = (ImageView) findViewById(R.id.image_input);
@@ -106,7 +108,7 @@ public class EditorActivity extends AppCompatActivity {
             selectedImageUri = data.getData();
             Glide.with(this).load(selectedImageUri).into(imagePreview);
             galleryButton.setVisibility(View.GONE);
-            cancelImage.setVisibility(View.VISIBLE);
+            editImage.setVisibility(View.VISIBLE);
         }
     }
 

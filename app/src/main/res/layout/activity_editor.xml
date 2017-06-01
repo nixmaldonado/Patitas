@@ -17,28 +17,39 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
-    <ImageView
-        android:id="@+id/image_input"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="4" />
+        android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/delete_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@mipmap/ic_cancel"
-        android:elevation="4dp"
-        android:visibility="invisible" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/edit_image"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="right"
+                android:background="@drawable/ic_edit"
+                android:elevation="4dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/image_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4" />
+
+        </FrameLayout>
+
+    </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/gallery_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp">
+        android:layout_marginTop="8dp">
 
         <ImageButton
             android:layout_width="36dp"
@@ -58,9 +69,11 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
         <EditText
+
             android:id="@+id/name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -5,4 +5,5 @@
     <string name="provide_name">Please provide a Name for the pet</string>
     <string name="provide_image">Please provide an image for the pet</string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="log_out">Log Out</string>
 </resources>

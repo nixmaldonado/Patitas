@@ -10,12 +10,18 @@ import com.bumptech.glide.Glide;
 
 public class DetailActivity extends AppCompatActivity {
 
+    TextView toolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -24,6 +30,7 @@ public class DetailActivity extends AppCompatActivity {
             Pet selectedPet = b.getParcelable("pet");
             setView(selectedPet);
         }
+
     }
 
     public void setView(Pet pet) {
@@ -31,5 +38,7 @@ public class DetailActivity extends AppCompatActivity {
         Glide.with(petImage.getContext()).load(pet.getPhotoUrl()).into(petImage);
         TextView petName = (TextView) findViewById(R.id.detail_name);
         petName.setText(pet.getName());
+        toolbarTitle.setText(pet.getName());
     }
+
 }

@@ -2,10 +2,9 @@
     <string name="app_name">Patitas</string>
     <string name="action_settings">Settings</string>
     <string name="action_save">Save</string>
-    <string name="provide_name">Please provide a Name for the pet</string>
-    <string name="provide_image">Please provide an image for the pet</string>
+    <string name="provide_fields">Please provide name and image for the pet</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="log_out">Log Out</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_actidivity_editor">Editor Activity</string>
+    <string name="title_activity_editor">Editor Activity</string>
 </resources>

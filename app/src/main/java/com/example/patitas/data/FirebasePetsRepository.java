@@ -1,12 +1,10 @@
-package com.example.patitas.infrastructure.persistance.firebase;
+package com.example.patitas.data;
 
 
 import android.net.Uri;
 
-import com.example.patitas.DatabaseUtils;
-import com.example.patitas.domain.pet.Pet;
-import com.example.patitas.domain.pet.PetsRepository;
-import com.example.patitas.infrastructure.listeners.FBPushOnSuccessListener;
+import com.example.patitas.util.FBPushOnSuccessListener;
+import com.example.patitas.pets.PetsRepository;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;

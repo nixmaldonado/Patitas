@@ -1,4 +1,4 @@
-package com.example.patitas.activities;
+package com.example.patitas.petdetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.patitas.R;
-import com.example.patitas.domain.pet.Pet;
+import com.example.patitas.data.Pet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailActivity extends AppCompatActivity {
+public class PetDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;

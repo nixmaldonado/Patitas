@@ -9,12 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.example.patitas.DatabaseUtils;
-import com.example.patitas.PetAdapter;
+import com.example.patitas.data.DatabaseUtils;
+import com.example.patitas.util.PetAdapter;
 import com.example.patitas.R;
-import com.example.patitas.activities.DetailActivity;
-import com.example.patitas.activities.EditorActivity;
-import com.example.patitas.domain.pet.Pet;
+import com.example.patitas.data.Pet;
+import com.example.patitas.petdetail.PetDetailActivity;
+import com.example.patitas.peteditor.EditorActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -81,7 +81,7 @@ public class PetsActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable(PET_MODEL_KEY, this.petAdapter.getItem(position));
 
-        this.startActivity(new Intent(this, DetailActivity.class).putExtras(bundle));
+        this.startActivity(new Intent(this, PetDetailActivity.class).putExtras(bundle));
     }
 
     @OnClick(R.id.fab)

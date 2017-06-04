@@ -1,4 +1,4 @@
-package com.example.patitas;
+package com.example.patitas.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.patitas.domain.pet.Pet;
+import com.example.patitas.R;
+import com.example.patitas.data.Pet;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.patitas.activities;
+package com.example.patitas.peteditor;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,9 +16,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.patitas.R;
-import com.example.patitas.domain.pet.Pet;
-import com.example.patitas.domain.pet.PetsRepository;
-import com.example.patitas.infrastructure.persistance.firebase.FirebasePetsRepository;
+import com.example.patitas.data.Pet;
+import com.example.patitas.pets.PetsRepository;
+import com.example.patitas.data.FirebasePetsRepository;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.example.patitas.domain.pet;
+package com.example.patitas.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;

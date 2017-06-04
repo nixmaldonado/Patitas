@@ -1,4 +1,4 @@
-package com.example.patitas;
+package com.example.patitas.data;
 
 import com.google.firebase.database.FirebaseDatabase;
 

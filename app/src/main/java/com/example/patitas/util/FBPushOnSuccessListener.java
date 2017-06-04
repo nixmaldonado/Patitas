@@ -1,6 +1,6 @@
-package com.example.patitas.infrastructure.listeners;
+package com.example.patitas.util;
 
-import com.example.patitas.domain.pet.Pet;
+import com.example.patitas.data.Pet;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.UploadTask;

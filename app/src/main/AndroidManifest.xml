@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".activities.CatalogActivity"
+            android:name=".pets.PetsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,11 +27,11 @@
         <activity
             android:name=".activities.DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".activities.CatalogActivity"
+            android:parentActivityName=".pets.PetsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.CatalogActivity" />
+                android:value=".pets.PetsActivity" />
         </activity>
     </application>
 

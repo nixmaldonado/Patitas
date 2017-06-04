@@ -1,4 +1,4 @@
-package com.example.patitas.activities;
+package com.example.patitas.pets;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.ListView;
 import com.example.patitas.DatabaseUtils;
 import com.example.patitas.PetAdapter;
 import com.example.patitas.R;
+import com.example.patitas.activities.DetailActivity;
+import com.example.patitas.activities.EditorActivity;
 import com.example.patitas.domain.pet.Pet;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemClick;
 
-public class CatalogActivity extends AppCompatActivity {
+public class PetsActivity extends AppCompatActivity {
 
     public static final String DATABASE_PETS_REFERENCE = "pets";
 
@@ -106,7 +108,7 @@ public class CatalogActivity extends AppCompatActivity {
         this.childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                CatalogActivity.this.petAdapter.add(dataSnapshot.getValue(Pet.class));
+                PetsActivity.this.petAdapter.add(dataSnapshot.getValue(Pet.class));
             }
 
             @Override

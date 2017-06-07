@@ -17,14 +17,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.patitas.R;
 import com.example.patitas.data.Pet;
-import com.example.patitas.pets.PetsRepository;
-import com.example.patitas.data.FirebasePetsRepository;
+import com.example.patitas.data.source.PetsDataSource;
+import com.example.patitas.data.source.FirebasePetsDataSource;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EditorActivity extends AppCompatActivity {
+public class PetEditorActivity extends AppCompatActivity {
+
+    public static final int REQUEST_ADD_PET = 1;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int RC_PHOTO_PICKER       = 1;
@@ -46,7 +48,7 @@ public class EditorActivity extends AppCompatActivity {
 
     private Uri imageUri;
 
-    protected PetsRepository petsRepository;
+    protected PetsDataSource petsDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +56,7 @@ public class EditorActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
 
-        this.petsRepository = new FirebasePetsRepository();
+        this.petsDataSource = new FirebasePetsDataSource();
 
         this.setSupportActionBar(this.toolbar);
     }
@@ -101,7 +103,7 @@ public class EditorActivity extends AppCompatActivity {
     private void handleSaveAction() {
         if (!this.hasRequiredInput()) return;
 
-        this.petsRepository.save(new Pet(this.nameEditText.getText().toString(),
+        this.petsDataSource.save(new Pet(this.nameEditText.getText().toString(),
                                          this.imageUri.toString()));
 
         this.finish();
@@ -109,7 +111,7 @@ public class EditorActivity extends AppCompatActivity {
 
     private boolean hasRequiredInput() {
         if (this.nameEditText.getText().toString().isEmpty() || !this.hasImageUri()) {
-            Toast.makeText(EditorActivity.this,
+            Toast.makeText(PetEditorActivity.this,
                            R.string.provide_fields, Toast.LENGTH_SHORT).show();
 
             return false;

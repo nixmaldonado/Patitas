@@ -9,12 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import com.example.patitas.data.DatabaseUtils;
+import com.example.patitas.data.source.DatabaseUtils;
 import com.example.patitas.util.PetAdapter;
 import com.example.patitas.R;
 import com.example.patitas.data.Pet;
 import com.example.patitas.petdetail.PetDetailActivity;
-import com.example.patitas.peteditor.EditorActivity;
+import com.example.patitas.peteditor.PetEditorActivity;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -86,7 +86,7 @@ public class PetsActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab)
     protected void addPet() {
-        Intent editorIntent = new Intent(this, EditorActivity.class);
+        Intent editorIntent = new Intent(this, PetEditorActivity.class);
         this.startActivity(editorIntent);
     }
 

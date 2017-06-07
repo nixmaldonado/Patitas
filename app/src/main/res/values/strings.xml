@@ -7,4 +7,7 @@
     <string name="log_out">Log Out</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_editor">Editor Activity</string>
+    <string name="successfully_saved_message">Pet Saved</string>
+    <string name="no_pets">No pets to show</string>
+    <string name="error_loading_pets">Error loading pets</string>
 </resources>

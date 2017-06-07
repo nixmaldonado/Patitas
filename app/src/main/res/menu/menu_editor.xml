@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".peteditor.EditorActivity">
+    tools:context=".peteditor.PetEditorActivity">
 
     <item
         android:id="@+id/action_save"

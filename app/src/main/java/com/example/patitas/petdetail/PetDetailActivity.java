@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 
 public class PetDetailActivity extends AppCompatActivity {
 
+    public static final String EXTRA_PET_ID = "PET_ID";
+
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 

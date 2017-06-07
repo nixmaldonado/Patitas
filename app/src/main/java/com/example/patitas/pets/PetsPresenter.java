@@ -1,47 +1,39 @@
 package com.example.patitas.pets;
 
 import com.example.patitas.data.Pet;
-import com.example.patitas.data.source.PetsDataSource;
+import com.example.patitas.data.source.PetsRepository;
+
+import java.util.List;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class PetsPresenter implements PetsContract.Presenter {
 
-    private final PetsDataSource petsDataSource;
+    private final PetsRepository petsRepository;
+
     private final PetsContract.View petsView;
-    private boolean firstLoad = true;
 
-
-    public PetsPresenter(PetsContract.View petsView, PetsDataSource petsDataSource) {
+    public PetsPresenter(PetsRepository petsRepository, PetsContract.View petsView) {
         this.petsView = checkNotNull(petsView, "petsView cannot be null");
-        this.petsDataSource = checkNotNull(petsDataSource, "petsRepository cannot be null");
+        this.petsRepository = checkNotNull(petsRepository, "petsRepository cannot be null");
 
         this.petsView.setPresenter(this);
     }
 
     @Override
     public void start() {
-        loadPets(false);
+        this.loadPets();
     }
 
     @Override
-    public void openPetDetails(Pet requestedPet) {
-        checkNotNull(requestedPet, "requested pet cannot be null!");
-        this.petsView.showPetDetailsUi(requestedPet.getId());
+    public void loadPets() {
+        this.processPets(this.petsRepository.getPets());
     }
 
-    @Override
-    public void loadPets(boolean forceUpdate) {
-        this.loadPets(forceUpdate || this.firstLoad, true);
-        this.firstLoad = false;
-    }
-
-    private void loadPets(boolean forceUpdate, final boolean showLoadingUi) {
-        if (showLoadingUi) {
-            this.petsView.setLoadingIndicator(true);
-        }
-        if (forceUpdate) {
-            this.petsDataSource.refreshPets();
-        }
+    protected void processPets(List<Pet> pets) {
+        if (pets.isEmpty())
+            this.petsView.showNoPets();
+        else
+            this.petsView.showPets(pets);
     }
 }

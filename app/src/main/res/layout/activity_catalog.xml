@@ -31,15 +31,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/pet_list"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/contentFrame"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -49,7 +48,6 @@
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_pets_white_24dp"
             app:elevation="4dp" />
-
     </FrameLayout>
 
 </LinearLayout>

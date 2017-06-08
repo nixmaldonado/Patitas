@@ -39,6 +39,11 @@ public class FirebasePetsRepository implements PetsRepository{
         this.databaseReference.addChildEventListener(new PetValueEventListener(callback));
     }
 
+    @Override
+    public Pet getPet(String petId) {
+        return null;
+    }
+
     private class PetValueEventListener implements ChildEventListener {
 
         private LoadPetsCallback callback;
@@ -50,7 +55,10 @@ public class FirebasePetsRepository implements PetsRepository{
 
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            FirebasePetsRepository.this.pets.add(dataSnapshot.getValue(Pet.class));
+            Pet pet = dataSnapshot.getValue(Pet.class);
+            pet.setId(dataSnapshot.getKey());
+
+            FirebasePetsRepository.this.pets.add(pet);
             this.callback.onPetsLoaded(FirebasePetsRepository.this.pets);
         }
 

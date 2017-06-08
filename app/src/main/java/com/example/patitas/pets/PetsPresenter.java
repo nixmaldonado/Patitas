@@ -35,6 +35,11 @@ public class PetsPresenter implements PetsContract.Presenter {
         });
     }
 
+    @Override
+    public void openPetDetail(Pet pet) {
+        this.petsView.showPetDetails(pet.getId());
+    }
+
     private void processPets(List<Pet> pets) {
         if (pets.isEmpty())
             this.petsView.showNoPets();

@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.example.patitas.R;
-import com.example.patitas.data.source.FirebasePetsRepository;
+import com.example.patitas.data.source.InMemoryPetsRepository;
 import com.example.patitas.util.ActivityUtils;
 
 import butterknife.BindView;
@@ -18,8 +18,6 @@ public class PetsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-
-    private PetsPresenter petsPresenter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -38,7 +36,7 @@ public class PetsActivity extends AppCompatActivity {
                     this.getSupportFragmentManager(), petsFragment, R.id.contentFrame);
         }
 
-        this.petsPresenter = new PetsPresenter(FirebasePetsRepository.getInstance(), petsFragment);
+        new PetsPresenter(InMemoryPetsRepository.getInstance(), petsFragment);
     }
 
     private void initToolbar() {

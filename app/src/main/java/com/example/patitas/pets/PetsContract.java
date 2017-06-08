@@ -12,10 +12,14 @@ interface PetsContract {
         void showPets(List<Pet> pets);
 
         void showNoPets();
+
+        void showPetDetails(String petId);
     }
 
     interface Presenter extends BasePresenter{
         void loadPets();
+
+        void openPetDetail(Pet pet);
     }
 
 }

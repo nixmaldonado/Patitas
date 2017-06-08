@@ -1,5 +1,6 @@
 package com.example.patitas.pets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,16 +17,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.patitas.R;
 import com.example.patitas.data.Pet;
+import com.example.patitas.petdetail.PetDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
 public class PetsFragment extends Fragment implements PetsContract.View {
+
+    public static final String EXTRA_PET_ID = "petId";
 
     private PetsContract.Presenter presenter;
 
@@ -71,6 +76,20 @@ public class PetsFragment extends Fragment implements PetsContract.View {
         this.setHasOptionsMenu(true);
 
         return root;
+    }
+
+    @OnItemClick(R.id.pets_list)
+    public void showPet(int position) {
+        this.presenter.openPetDetail(this.petsAdapter.getItem(position));
+    }
+
+    @Override
+    public void showPetDetails(String petId) {
+        Intent intent = new Intent(this.getActivity(), PetDetailActivity.class);
+
+        intent.putExtra(EXTRA_PET_ID, petId);
+
+        this.startActivity(intent);
     }
 
     @Override

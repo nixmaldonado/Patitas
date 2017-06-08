@@ -3,7 +3,8 @@ package com.example.patitas.data.source;
 import com.example.patitas.data.Pet;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
@@ -11,13 +12,14 @@ public class InMemoryPetsRepository implements PetsRepository {
 
     public static final InMemoryPetsRepository INSTANCE = new InMemoryPetsRepository();
 
-    private List<Pet> pets = new ArrayList<>();
+    private Map<String, Pet> pets = new HashMap<>();
 
     private InMemoryPetsRepository() {
         Pet pet = new Pet("Arturito", "");
         pet.setRemoteImageUri("");
+        pet.setId("1");
 
-        this.pets.add(pet);
+        this.pets.put(pet.getId(), pet);
     }
 
     public static InMemoryPetsRepository getInstance() {
@@ -28,6 +30,11 @@ public class InMemoryPetsRepository implements PetsRepository {
     public void getPets(LoadPetsCallback callback) {
         checkNotNull(callback);
 
-        callback.onPetsLoaded(this.pets);
+        callback.onPetsLoaded(new ArrayList<>(this.pets.values()));
+    }
+
+    @Override
+    public Pet getPet(String petId) {
+        return this.pets.get(petId);
     }
 }

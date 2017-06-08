@@ -42,6 +42,12 @@ public class Pet implements Parcelable {
         this.remoteImageUri = remoteImageUri;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId(){ return this.id; }
+
     public String getName() {
         return this.name;
     }
@@ -65,6 +71,4 @@ public class Pet implements Parcelable {
         dest.writeString(this.remoteImageUri);
         dest.writeString(this.localImageUri);
     }
-
-    public String getId(){return id;}
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface PetsRepository {
 
+    Pet getPet(String petId);
+
     interface LoadPetsCallback {
 
         void onPetsLoaded(List<Pet> pets);

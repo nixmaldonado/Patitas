@@ -22,9 +22,12 @@ class PetDetailPresenter implements PetDetailContract.Presenter {
 
     @Override
     public void start() {
-        Pet pet = this.petsRepository.getPet(this.petId);
+        this.petsRepository.getPet(this.petId, new PetsRepository.LoadPetCallback() {
 
-        this.view.showPetDetail(pet);
-
+            @Override
+            public void onPetLoaded(Pet pet) {
+                PetDetailPresenter.this.view.showPetDetail(pet);
+            }
+        });
     }
 }

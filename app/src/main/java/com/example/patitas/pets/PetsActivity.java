@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.example.patitas.R;
-import com.example.patitas.data.source.InMemoryPetsRepository;
 import com.example.patitas.util.ActivityUtils;
+import com.example.patitas.util.Injection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +36,7 @@ public class PetsActivity extends AppCompatActivity {
                     this.getSupportFragmentManager(), petsFragment, R.id.contentFrame);
         }
 
-        new PetsPresenter(InMemoryPetsRepository.getInstance(), petsFragment);
+        new PetsPresenter(Injection.providePetsRepository(), petsFragment);
     }
 
     private void initToolbar() {

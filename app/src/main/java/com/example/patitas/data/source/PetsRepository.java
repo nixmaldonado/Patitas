@@ -7,12 +7,17 @@ import java.util.List;
 
 public interface PetsRepository {
 
-    Pet getPet(String petId);
+    void getPets(LoadPetsCallback callback);
 
     interface LoadPetsCallback {
 
         void onPetsLoaded(List<Pet> pets);
     }
 
-    void getPets(LoadPetsCallback callback);
+    void getPet(String petId, LoadPetCallback callback);
+
+    interface LoadPetCallback {
+
+        void onPetLoaded(Pet pet);
+    }
 }

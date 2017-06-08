@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +41,18 @@ public class FirebasePetsRepository implements PetsRepository{
     }
 
     @Override
-    public Pet getPet(String petId) {
-        return null;
+    public void getPet(String petId, final LoadPetCallback callback) {
+        this.databaseReference.child(petId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                callback.onPetLoaded(dataSnapshot.getValue(Pet.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private class PetValueEventListener implements ChildEventListener {

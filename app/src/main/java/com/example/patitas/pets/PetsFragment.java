@@ -92,7 +92,7 @@ public class PetsFragment extends Fragment implements PetsContract.View {
 
         private List<Pet> pets;
 
-        public PetsAdapter(List<Pet> pets) {
+        PetsAdapter(List<Pet> pets) {
             this.pets = pets;
         }
 
@@ -100,7 +100,7 @@ public class PetsFragment extends Fragment implements PetsContract.View {
             this.pets = checkNotNull(pets);
         }
 
-        public void replaceData(List<Pet> pets) {
+        void replaceData(List<Pet> pets) {
             this.setPets(pets);
             this.notifyDataSetChanged();
         }

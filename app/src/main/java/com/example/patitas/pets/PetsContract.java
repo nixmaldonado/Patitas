@@ -6,7 +6,7 @@ import com.example.patitas.data.Pet;
 
 import java.util.List;
 
-public interface PetsContract {
+interface PetsContract {
 
     interface View extends BaseView<Presenter>{
         void showPets(List<Pet> pets);
@@ -15,7 +15,7 @@ public interface PetsContract {
     }
 
     interface Presenter extends BasePresenter{
-        void loadPets ();
+        void loadPets();
     }
 
 }

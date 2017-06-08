@@ -27,10 +27,15 @@ public class PetsPresenter implements PetsContract.Presenter {
 
     @Override
     public void loadPets() {
-        this.processPets(this.petsRepository.getPets());
+        this.petsRepository.getPets(new PetsRepository.LoadPetsCallback() {
+            @Override
+            public void onPetsLoaded(List<Pet> pets) {
+                PetsPresenter.this.processPets(pets);
+            }
+        });
     }
 
-    protected void processPets(List<Pet> pets) {
+    private void processPets(List<Pet> pets) {
         if (pets.isEmpty())
             this.petsView.showNoPets();
         else

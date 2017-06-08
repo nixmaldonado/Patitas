@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.example.patitas.R;
 import com.example.patitas.data.Pet;
 import com.example.patitas.data.source.PetsDataSource;
-import com.example.patitas.data.source.FirebasePetsDataSource;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,8 +54,6 @@ public class PetEditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_editor);
         ButterKnife.bind(this);
-
-        this.petsDataSource = new FirebasePetsDataSource();
 
         this.setSupportActionBar(this.toolbar);
     }

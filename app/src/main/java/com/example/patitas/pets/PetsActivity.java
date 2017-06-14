@@ -1,20 +1,21 @@
 package com.example.patitas.pets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.example.patitas.R;
-import com.example.patitas.data.source.InMemoryPetsRepository;
+import com.example.patitas.data.source.FirebasePetsRepository;
+import com.example.patitas.peteditor.PetEditorActivity;
 import com.example.patitas.util.ActivityUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PetsActivity extends AppCompatActivity {
 
-    /*@BindView(R.id.fab)
-    FloatingActionButton fab;*/
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -36,7 +37,7 @@ public class PetsActivity extends AppCompatActivity {
                     this.getSupportFragmentManager(), petsFragment, R.id.contentFrame);
         }
 
-        new PetsPresenter(InMemoryPetsRepository.getInstance(), petsFragment);
+        new PetsPresenter(FirebasePetsRepository.getInstance(), petsFragment);
     }
 
     private void initToolbar() {
@@ -45,11 +46,11 @@ public class PetsActivity extends AppCompatActivity {
         this.getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
-    /*@OnClick(R.id.fab)
+    @OnClick(R.id.fab)
     protected void addPet() {
         Intent editorIntent = new Intent(this, PetEditorActivity.class);
         this.startActivity(editorIntent);
-    }*/
+    }
 
     /*@Override
     public boolean onCreateOptionsMenu(final Menu menu) {

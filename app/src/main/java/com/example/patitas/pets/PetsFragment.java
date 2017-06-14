@@ -161,4 +161,5 @@ public class PetsFragment extends Fragment implements PetsContract.View {
             return rowView;
         }
     }
+
 }

@@ -1,11 +1,16 @@
 package com.example.patitas.data.source;
 
+import android.net.Uri;
+
 import com.example.patitas.data.Pet;
+import com.example.patitas.util.FBPushOnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +22,17 @@ public class FirebasePetsRepository implements PetsRepository{
     private static final FirebasePetsRepository INSTANCE = new FirebasePetsRepository();
 
     private static final String PETS_REFERENCE = "pets";
+    public static final String PET_PHOTOS = "pet_photos";
 
     private DatabaseReference databaseReference;
+    private StorageReference storageReference;
 
     private List<Pet> pets;
 
     private FirebasePetsRepository() {
         this.pets = new ArrayList<>();
         this.databaseReference = FirebaseDatabase.getInstance().getReference(PETS_REFERENCE);
+        this.storageReference = FirebaseStorage.getInstance().getReference().child(PET_PHOTOS);
     }
 
     public static FirebasePetsRepository getInstance() {
@@ -81,6 +89,16 @@ public class FirebasePetsRepository implements PetsRepository{
         public void onCancelled(DatabaseError databaseError) {
 
         }
+    }
+
+    @Override
+    public void savePet(final Pet pet) {
+        Uri localImageUri = Uri.parse(pet.getLocalImageUri());
+
+        this.storageReference
+                .child(localImageUri.getLastPathSegment())
+                .putFile(localImageUri)
+                .addOnSuccessListener(new FBPushOnSuccessListener(pet, this.databaseReference));
     }
 
 }

@@ -34,6 +34,11 @@ public class InMemoryPetsRepository implements PetsRepository {
     }
 
     @Override
+    public void savePet(Pet pet) {
+
+    }
+
+    @Override
     public Pet getPet(String petId) {
         return this.pets.get(petId);
     }

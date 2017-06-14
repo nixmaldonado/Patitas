@@ -3,6 +3,7 @@ package com.example.patitas.petdetail;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.example.patitas.R;
 import com.example.patitas.data.source.InMemoryPetsRepository;
@@ -45,5 +46,11 @@ public class PetDetailActivity extends AppCompatActivity {
     private void initToolbar() {
         this.setSupportActionBar(this.toolbar);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.menu_detail, menu);
+        return true;
     }
 }

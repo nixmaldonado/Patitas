@@ -15,4 +15,6 @@ public interface PetsRepository {
     }
 
     void getPets(LoadPetsCallback callback);
+
+    void savePet(Pet pet);
 }

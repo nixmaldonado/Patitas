@@ -101,7 +101,6 @@ public class PetEditorFragment extends Fragment implements PetEditorContract.Vie
         if (this.nameEditText.getText().toString().isEmpty() || !this.hasImageUri()) {
             Toast.makeText(this.getContext(),
                     R.string.provide_fields, Toast.LENGTH_SHORT).show();
-
             return false;
         }
 
@@ -118,7 +117,7 @@ public class PetEditorFragment extends Fragment implements PetEditorContract.Vie
     }
 
     public void createNewPet() {
-        Pet pet = new Pet(nameEditText.getText().toString(), imageUri.toString());
+        Pet pet = new Pet(nameEditText.getText().toString().trim(), imageUri.toString());
         presenter.savePet(pet);
     }
 }

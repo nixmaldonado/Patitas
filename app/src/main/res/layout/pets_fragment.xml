@@ -26,8 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="invisible">
-
+        android:visibility="visible">
         <ImageView
             android:id="@+id/no_pets_icon"
             android:layout_width="48dp"

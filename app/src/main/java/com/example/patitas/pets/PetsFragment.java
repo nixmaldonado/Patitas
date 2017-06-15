@@ -99,6 +99,7 @@ public class PetsFragment extends Fragment implements PetsContract.View {
 
     @Override
     public void showPets(List<Pet> pets) {
+        this.noPetsLayout.setVisibility(View.INVISIBLE);
         this.petsAdapter.replaceData(pets);
     }
 
@@ -111,13 +112,7 @@ public class PetsFragment extends Fragment implements PetsContract.View {
 
         private List<Pet> pets;
 
-        PetsAdapter(List<Pet> pets) {
-            this.pets = pets;
-        }
-
-        private void setPets(List<Pet> pets) {
-            this.pets = checkNotNull(pets);
-        }
+        PetsAdapter(List<Pet> pets) {this.pets = pets;}
 
         void replaceData(List<Pet> pets) {
             this.setPets(pets);
@@ -160,6 +155,9 @@ public class PetsFragment extends Fragment implements PetsContract.View {
 
             return rowView;
         }
-    }
 
+        private void setPets(List<Pet> pets) {
+            this.pets = checkNotNull(pets);
+        }
+    }
 }

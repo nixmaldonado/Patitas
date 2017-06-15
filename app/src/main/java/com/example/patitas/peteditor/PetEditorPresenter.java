@@ -11,8 +11,6 @@ public class PetEditorPresenter implements PetEditorContract.Presenter{
 
     private String petId;
 
-
-
     public PetEditorPresenter(String petId, PetsRepository petsRepository, PetEditorContract.View view){
         this.petsRepository = petsRepository;
         this.view = view;
@@ -23,6 +21,7 @@ public class PetEditorPresenter implements PetEditorContract.Presenter{
 
     @Override
     public void start() {
+
     }
 
     @Override

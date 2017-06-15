@@ -12,6 +12,7 @@ public interface PetsRepository {
     interface LoadPetsCallback {
 
         void onPetsLoaded(List<Pet> pets);
+
     }
 
     void getPets(LoadPetsCallback callback);

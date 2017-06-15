@@ -8,7 +8,6 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -21,8 +20,8 @@ public class FirebasePetsRepository implements PetsRepository{
 
     private static final FirebasePetsRepository INSTANCE = new FirebasePetsRepository();
 
+    private static final String PET_PHOTOS = "pet_photos";
     private static final String PETS_REFERENCE = "pets";
-    public static final String PET_PHOTOS = "pet_photos";
 
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
@@ -31,7 +30,7 @@ public class FirebasePetsRepository implements PetsRepository{
 
     private FirebasePetsRepository() {
         this.pets = new ArrayList<>();
-        this.databaseReference = FirebaseDatabase.getInstance().getReference(PETS_REFERENCE);
+        this.databaseReference = DatabaseUtils.getDatabase().getReference(PETS_REFERENCE);
         this.storageReference = FirebaseStorage.getInstance().getReference().child(PET_PHOTOS);
     }
 
@@ -52,12 +51,21 @@ public class FirebasePetsRepository implements PetsRepository{
         return null;
     }
 
+    @Override
+    public void savePet(final Pet pet) {
+        Uri localImageUri = Uri.parse(pet.getLocalImageUri());
+
+        this.storageReference
+                .child(localImageUri.getLastPathSegment())
+                .putFile(localImageUri)
+                .addOnSuccessListener(new FBPushOnSuccessListener(pet, this.databaseReference));
+    }
+
     private class PetValueEventListener implements ChildEventListener {
 
         private LoadPetsCallback callback;
 
         PetValueEventListener(LoadPetsCallback callback) {
-
             this.callback = callback;
         }
 
@@ -89,16 +97,6 @@ public class FirebasePetsRepository implements PetsRepository{
         public void onCancelled(DatabaseError databaseError) {
 
         }
-    }
-
-    @Override
-    public void savePet(final Pet pet) {
-        Uri localImageUri = Uri.parse(pet.getLocalImageUri());
-
-        this.storageReference
-                .child(localImageUri.getLastPathSegment())
-                .putFile(localImageUri)
-                .addOnSuccessListener(new FBPushOnSuccessListener(pet, this.databaseReference));
     }
 
 }

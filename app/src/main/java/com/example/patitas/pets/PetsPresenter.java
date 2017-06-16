@@ -13,6 +13,8 @@ public class PetsPresenter implements PetsContract.Presenter {
 
     private final PetsContract.View petsView;
 
+    private boolean firstLoad = true;
+
     public PetsPresenter(PetsRepository petsRepository, PetsContract.View petsView) {
         this.petsView = checkNotNull(petsView, "petsView cannot be null");
         this.petsRepository = checkNotNull(petsRepository, "petsRepository cannot be null");

@@ -10,4 +10,5 @@
     <string name="successfully_saved_message">Pet Saved</string>
     <string name="no_pets">No pets to show</string>
     <string name="error_loading_pets">Error loading pets</string>
+    <string name="edit_this_pet">Edit this Pet</string>
 </resources>

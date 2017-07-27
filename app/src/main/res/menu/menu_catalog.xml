@@ -3,14 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".pets.PetsActivity" >
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_log_in"
+        android:icon="@drawable/ic_login"
+        android:title="@string/login"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 
     <item android:id="@+id/action_log_out"
+        android:icon="@drawable/ic_logout"
         android:title="@string/log_out"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
+
 
 </menu>

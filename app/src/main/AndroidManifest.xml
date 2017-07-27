@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".peteditor.PetEditorActivity" />
+        <activity android:name=".petcreator.PetCreatorActivity" />
 
         <activity
             android:name=".petdetail.PetDetailActivity"
@@ -35,6 +35,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".pets.PetsActivity" />
         </activity>
+
+        <activity android:name=".auth.GoogleSignInActivity"/>
+
+
+
     </application>
 
 </manifest>

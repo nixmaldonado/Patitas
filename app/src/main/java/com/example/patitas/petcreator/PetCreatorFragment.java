@@ -1,4 +1,4 @@
-package com.example.patitas.peteditor;
+package com.example.patitas.petcreator;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.patitas.R;
-import com.example.patitas.data.Pet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,28 +24,38 @@ import butterknife.OnClick;
 import static android.app.Activity.RESULT_OK;
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class PetEditorFragment extends Fragment implements PetEditorContract.View {
+public class PetCreatorFragment extends Fragment implements PetCreatorContract.View {
 
-    PetEditorContract.Presenter presenter;
     private static final int RC_PHOTO_PICKER = 1;
 
-    @BindView(R.id.name_input)
-    EditText nameEditText;
-
-    @BindView(R.id.image_input)
-    ImageView imagePreview;
-
-    @BindView(R.id.gallery_input)
-    LinearLayout galleryButton;
-
-    @BindView(R.id.edit_image)
-    ImageButton editImage;
+    private PetCreatorContract.Presenter presenter;
 
     private Uri imageUri;
 
+    @BindView(R.id.name_input)
+    protected EditText nameEditText;
+
+    @BindView(R.id.image_input)
+    protected ImageView imagePreview;
+
+    @BindView(R.id.gallery_input)
+    protected LinearLayout galleryButton;
+
+    @BindView(R.id.edit_image)
+    protected ImageButton editImage;
+
+//    @BindView(R.id.create_pet_done)
+//    protected FloatingActionButton doneButton;
+//
+//    @OnClick(R.id.create_pet_done)
+//    public void doneCreatingPet(){
+//        this.presenter.createPet(this.getName(), this.getImageUri());
+//    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.pet_editor_fragment, container, false);
         ButterKnife.bind(this, root);
@@ -55,17 +64,12 @@ public class PetEditorFragment extends Fragment implements PetEditorContract.Vie
     }
 
     @Override
-    public void setPresenter(PetEditorContract.Presenter presenter) {
+    public void setPresenter(PetCreatorContract.Presenter presenter) {
         this.presenter = checkNotNull(presenter);
     }
 
-    @Override
-    public void showPetEditor(Pet pet) {
-
-    }
-
-    public static PetEditorFragment newInstance(){
-        return new PetEditorFragment();
+    public static PetCreatorFragment newInstance() {
+        return new PetCreatorFragment();
     }
 
     @Override
@@ -86,7 +90,7 @@ public class PetEditorFragment extends Fragment implements PetEditorContract.Vie
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK && data != null){
+        if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK && data != null) {
             this.imageUri = data.getData();
 
             Glide.with(this).load(this.imageUri).into(this.imagePreview);
@@ -97,27 +101,16 @@ public class PetEditorFragment extends Fragment implements PetEditorContract.Vie
 
     }
 
-    public boolean hasRequiredInput() {
-        if (this.nameEditText.getText().toString().isEmpty() || !this.hasImageUri()) {
-            Toast.makeText(this.getContext(),
-                    R.string.provide_fields, Toast.LENGTH_SHORT).show();
-            return false;
-        }
 
-        return true;
+    public void triggerToast(int message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void setPresenter() {
 
+    public String getName(){ return this.nameEditText.getText().toString().trim(); }
+
+    public String getImageUri(){
+        return this.imageUri.toString();
     }
 
-    private boolean hasImageUri() {
-        return this.imageUri != null;
-    }
-
-    public void createNewPet() {
-        Pet pet = new Pet(nameEditText.getText().toString().trim(), imageUri.toString());
-        presenter.savePet(pet);
-    }
 }

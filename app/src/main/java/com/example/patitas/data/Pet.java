@@ -71,4 +71,10 @@ public class Pet implements Parcelable {
         dest.writeString(this.remoteImageUri);
         dest.writeString(this.localImageUri);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        final Pet pet = (Pet) obj;
+        return this.getId().equals(pet.getId());
+    }
 }

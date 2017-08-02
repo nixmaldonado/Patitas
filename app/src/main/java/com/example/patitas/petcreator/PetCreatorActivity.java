@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.patitas.R;
 import com.example.patitas.util.ActivityUtils;
@@ -40,13 +41,24 @@ public class PetCreatorActivity extends AppCompatActivity {
     }
 
     private void setFragment() {
-        petCreatorFragment = (PetCreatorFragment) this.getSupportFragmentManager()
+        this.petCreatorFragment = (PetCreatorFragment) this.getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
 
-        if (petCreatorFragment == null){
-            petCreatorFragment = PetCreatorFragment.newInstance();
+        if (this.petCreatorFragment == null) {
+            this.petCreatorFragment = PetCreatorFragment.newInstance();
             ActivityUtils.addFragmentToActivity(this.getSupportFragmentManager(),
-                    petCreatorFragment, R.id.contentFrame);
+                    this.petCreatorFragment, R.id.contentFrame);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.done_creating){
+            if(this.petCreatorFragment.done()){
+                this.finish();
+            }
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

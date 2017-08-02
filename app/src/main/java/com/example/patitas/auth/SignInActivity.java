@@ -28,32 +28,34 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class GoogleSignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
+public class SignInActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener{
 
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
+    private static FirebaseUser firebaseUser;
 
 
     private GoogleApiClient mGoogleApiClient;
-    private TextView mStatusTextView;
+    private TextView titleText;
+    private TextView subtitleText;
     private SignInButton signInButton;
     private LinearLayout signOutButton;
+    private static boolean isSignedIn;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_google);
+        this.setContentView(R.layout.activity_sign_in);
 
-        this.mStatusTextView = (TextView) this.findViewById(R.id.status);
-        TextView mDetailTextView = (TextView) this.findViewById(R.id.detail);
+        this.titleText = (TextView) this.findViewById(R.id.sign_in_title_text);
+        this.subtitleText = (TextView) this.findViewById(R.id.sign_in_subtitle);
 
         this.findViewById(R.id.google_sign_in).setOnClickListener(this);
         this.findViewById(R.id.sign_out_button).setOnClickListener(this);
-        this.findViewById(R.id.disconnect_button).setOnClickListener(this);
 
         this.signInButton = (SignInButton) this.findViewById(R.id.google_sign_in);
         this.signOutButton = (LinearLayout) this.findViewById(R.id.sign_out_and_disconnect);
@@ -67,6 +69,38 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+
+        firebaseUser = this.mAuth.getCurrentUser();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isUserSignedIn()){
+            this.updateUI(firebaseUser);
+        }
+    }
+
+    public static boolean isUserSignedIn() {
+        return isSignedIn;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.google_sign_in:
+                this.signIn();
+                break;
+            case R.id.sign_out_button:
+                this.signOut();
+                break;
+        }
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     private void signIn(){
@@ -93,11 +127,11 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    FirebaseUser user = GoogleSignInActivity.this.mAuth.getCurrentUser();
-                    GoogleSignInActivity.this.updateUI(user);
-
+                    FirebaseUser user = SignInActivity.this.mAuth.getCurrentUser();
+                    SignInActivity.this.updateUI(user);
+                    isSignedIn = true;
                 } else {
-                    Toast.makeText(GoogleSignInActivity.this, R.string.auth_failed,
+                    Toast.makeText(SignInActivity.this, R.string.auth_failed,
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -105,9 +139,10 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
     }
 
     private void updateUI(FirebaseUser user){
-            this.mStatusTextView.setText("Hello " + user.getDisplayName());
+        this.titleText.setText("Hello " + user.getDisplayName().split(" ")[0] + "!");
         this.signInButton.setVisibility(View.INVISIBLE);
         this.signOutButton.setVisibility(View.VISIBLE);
+        this.subtitleText.setVisibility(View.INVISIBLE);
 
     }
 
@@ -115,29 +150,14 @@ public class GoogleSignInActivity extends AppCompatActivity implements GoogleApi
         Auth.GoogleSignInApi.signOut(this.mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                GoogleSignInActivity.this.mStatusTextView.setText(R.string.signed_out);
+                SignInActivity.this.titleText.setText(R.string.signed_out);
             }
         });
+        this.mAuth.signOut();
+        isSignedIn = false;
         this.signInButton.setVisibility(View.VISIBLE);
         this.signOutButton.setVisibility(View.INVISIBLE);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.google_sign_in:
-                this.signIn();
-                break;
-            case R.id.sign_out_button:
-                this.signOut();
-                break;
-            }
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        this.subtitleText.setVisibility(View.VISIBLE);
 
     }
 }

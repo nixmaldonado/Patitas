@@ -13,11 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity
             android:name=".pets.PetsActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,9 +38,8 @@
                 android:value=".pets.PetsActivity" />
         </activity>
 
-        <activity android:name=".auth.GoogleSignInActivity"/>
-
-
+        <activity android:name=".auth.SignInActivity"
+            android:parentActivityName=".pets.PetsActivity"/>
 
     </application>
 

@@ -3,14 +3,15 @@ package com.example.patitas.data.source;
 import android.net.Uri;
 
 import com.example.patitas.data.Pet;
+import com.example.patitas.pets.PetsAdapter;
 import com.example.patitas.util.FBPushOnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,49 @@ public class FirebasePetsRepository implements PetsRepository{
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
-    private List<Pet> pets;
+    public List<Pet> pets;
+
 
     private FirebasePetsRepository() {
         this.pets = new ArrayList<>();
         this.databaseReference = DatabaseUtils.getDatabase().getReference(PETS_REFERENCE);
         this.storageReference = FirebaseStorage.getInstance().getReference().child(PET_PHOTOS);
+        this.databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Pet pet = dataSnapshot.getValue(Pet.class);
+                pet.setId(dataSnapshot.getKey());
+
+                FirebasePetsRepository.this.pets.add(pet);
+                PetsAdapter.getInstance().replaceData(FirebasePetsRepository.this.pets);
+                PetsAdapter.getInstance().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Pet pet = dataSnapshot.getValue(Pet.class);
+                pet.setId(dataSnapshot.getKey());
+
+                FirebasePetsRepository.this.pets.remove(pet);
+                PetsAdapter.getInstance().replaceData(FirebasePetsRepository.this.pets);
+                PetsAdapter.getInstance().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public static FirebasePetsRepository getInstance() {
@@ -44,12 +82,12 @@ public class FirebasePetsRepository implements PetsRepository{
         checkNotNull(callback);
 
         this.pets.clear();
-        this.databaseReference.addChildEventListener(new PetValueEventListener(callback));
+
     }
 
     @Override
     public void getPet(String petId, final LoadPetCallback callback) {
-        this.databaseReference.child(petId).addListenerForSingleValueEvent(new ValueEventListener() {
+        this.databaseReference.child(petId).addListenerForSingleValueEvent(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onPetLoaded(dataSnapshot.getValue(Pet.class));
@@ -70,44 +108,6 @@ public class FirebasePetsRepository implements PetsRepository{
                 .child(localImageUri.getLastPathSegment())
                 .putFile(localImageUri)
                 .addOnSuccessListener(new FBPushOnSuccessListener(pet, this.databaseReference));
-    }
-
-    private class PetValueEventListener implements ChildEventListener {
-
-        private LoadPetsCallback callback;
-
-        PetValueEventListener(LoadPetsCallback callback) {
-            this.callback = callback;
-        }
-
-        @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-            Pet pet = dataSnapshot.getValue(Pet.class);
-            pet.setId(dataSnapshot.getKey());
-
-            FirebasePetsRepository.this.pets.add(pet);
-            this.callback.onPetsLoaded(FirebasePetsRepository.this.pets);
-        }
-
-        @Override
-        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-        }
-
-        @Override
-        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
     }
 
 }

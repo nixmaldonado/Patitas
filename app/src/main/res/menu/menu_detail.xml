@@ -5,7 +5,6 @@
     tools:context=".pets.PetDetailActivity">
     <item
         android:title="@string/edit_this_pet"
-        android:id="@+id/edit_this_pet"
         android:icon="@drawable/ic_edit"
         app:showAsAction="always"/>
 

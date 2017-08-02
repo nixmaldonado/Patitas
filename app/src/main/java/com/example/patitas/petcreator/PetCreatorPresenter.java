@@ -1,22 +1,16 @@
 package com.example.patitas.petcreator;
 
-import android.support.design.widget.FloatingActionButton;
-
 import com.example.patitas.R;
 import com.example.patitas.data.Pet;
 import com.example.patitas.data.source.PetsRepository;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
-public class PetCreatorPresenter implements PetCreatorContract.Presenter {
+class PetCreatorPresenter implements PetCreatorContract.Presenter {
 
     private final PetsRepository petsRepository;
 
     private final PetCreatorContract.View view;
 
-
-    public PetCreatorPresenter(PetsRepository petsRepository, PetCreatorContract.View view) {
+    PetCreatorPresenter(PetsRepository petsRepository, PetCreatorContract.View view) {
         this.petsRepository = petsRepository;
         this.view = view;
 
@@ -30,7 +24,7 @@ public class PetCreatorPresenter implements PetCreatorContract.Presenter {
     @Override
     public void createPet(String name, String imageUri) {
         if (!this.hasRequiredInput(name, imageUri)) {
-            view.triggerToast(R.string.provide_fields);
+            this.view.triggerToast(R.string.provide_fields);
             return;
         }
         this.petsRepository.savePet(new Pet(name, imageUri));

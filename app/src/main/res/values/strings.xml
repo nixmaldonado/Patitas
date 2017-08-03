@@ -8,7 +8,7 @@
 
     <string name="sign_out">Sign Out</string>
     <string name="disconnect">Disconnect</string>
-    <string name="signed_out">Please sign in :D</string>
+    <string name="please_sign_in">Please sign in :D</string>
     <string name="desc_firebase_lockup">Firebase logo and name</string>
     <string name="auth_failed">Authentication failed</string>
 
@@ -18,5 +18,6 @@
     <string name="name">Name</string>
     <string name="howdy">Howdy!</string>
     <string name="done">Done</string>
+    <string name="publish_pet">Publish Pet</string>
 
 </resources>

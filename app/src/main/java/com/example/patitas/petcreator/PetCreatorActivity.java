@@ -2,22 +2,15 @@ package com.example.patitas.petcreator;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.example.patitas.R;
 import com.example.patitas.util.ActivityUtils;
 import com.example.patitas.util.Injection;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PetCreatorActivity extends AppCompatActivity {
-
-
-    @BindView(R.id.my_toolbar)
-    Toolbar toolbar;
 
     private PetCreatorFragment petCreatorFragment;
 
@@ -30,8 +23,6 @@ public class PetCreatorActivity extends AppCompatActivity {
         this.setFragment();
 
         new PetCreatorPresenter(Injection.providePetsRepository(), this.petCreatorFragment);
-
-        this.setSupportActionBar(this.toolbar);
     }
 
     @Override
@@ -49,16 +40,5 @@ public class PetCreatorActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(this.getSupportFragmentManager(),
                     this.petCreatorFragment, R.id.contentFrame);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.done_creating){
-            if(this.petCreatorFragment.done()){
-                this.finish();
-            }
-
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

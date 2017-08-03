@@ -51,13 +51,13 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
         return root;
     }
 
-    public boolean done(){
+    @OnClick(R.id.done_creating)
+    public void done(){
         if (this.hasRequiredInput()){
             this.presenter.createPet(this.getName(), this.getImageUri());
-            return true;
+            this.getActivity().finish();
         }else{
             this.triggerToast(R.string.provide_fields);
-            return false;
         }
 
     }
@@ -77,7 +77,7 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
         this.presenter.start();
     }
 
-    @OnClick({R.id.gallery_input, R.id.image_input})
+    @OnClick({R.id.gallery_input})
     protected void openGallery() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT)
                 .setType("image/jpeg")

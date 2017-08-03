@@ -3,7 +3,6 @@ package com.example.patitas.pets;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ import com.example.patitas.petcreator.PetCreatorActivity;
 import com.example.patitas.util.ActivityUtils;
 import com.example.patitas.util.Injection;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,10 +21,6 @@ import static com.example.patitas.R.id.fab;
 
 public class PetsActivity extends AppCompatActivity  {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    private static final int RC_SIGN_IN = 9001;
     private PetsFragment petsFragment = new PetsFragment();
 
     @Override
@@ -36,7 +30,6 @@ public class PetsActivity extends AppCompatActivity  {
         new PetsPresenter(Injection.providePetsRepository(), this.petsFragment);
         ButterKnife.bind(this);
         this.addFragmentToPetActivity();
-        this.initToolbar();
         FirebasePetsRepository.getInstance();
     }
 
@@ -70,11 +63,5 @@ public class PetsActivity extends AppCompatActivity  {
     private void addFragmentToPetActivity() {
         ActivityUtils.addFragmentToActivity(
                 this.getSupportFragmentManager(), this.petsFragment, R.id.contentFrame);
-    }
-
-    private void initToolbar() {
-        this.setSupportActionBar(this.toolbar);
-        this.getSupportActionBar().setLogo(R.drawable.ic_pets_white_24dp);
-        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 }

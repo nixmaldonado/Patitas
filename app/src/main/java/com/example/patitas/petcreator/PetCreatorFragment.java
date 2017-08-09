@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.patitas.R;
+import com.example.patitas.auth.SignInActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,21 +46,19 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.activity_editor_fragment, container, false);
+        View root = inflater.inflate(R.layout.activity_creator_fragment, container, false);
         ButterKnife.bind(this, root);
 
         return root;
     }
 
-    @OnClick(R.id.done_creating)
     public void done(){
         if (this.hasRequiredInput()){
-            this.presenter.createPet(this.getName(), this.getImageUri());
+            this.presenter.createPet(this.getName(), this.getImageUri(), SignInActivity.getCurrentUserId(), SignInActivity.getUserName());
             this.getActivity().finish();
         }else{
             this.triggerToast(R.string.provide_fields);
         }
-
     }
 
     @Override

@@ -3,9 +3,9 @@ package com.example.patitas.pets;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.patitas.R;
 import com.example.patitas.auth.SignInActivity;
@@ -31,6 +31,9 @@ public class PetsActivity extends AppCompatActivity  {
         ButterKnife.bind(this);
         this.addFragmentToPetActivity();
         FirebasePetsRepository.getInstance();
+
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.pets_toolbar);
+        this.setSupportActionBar(toolbar);
     }
 
     @Override
@@ -48,15 +51,13 @@ public class PetsActivity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     @OnClick(fab)
     protected void addPet() {
         if(SignInActivity.isUserSignedIn()){
             Intent editorIntent = new Intent(this, PetCreatorActivity.class);
             this.startActivityForResult(editorIntent, 1);
         }else{
-            Toast.makeText(PetsActivity.this, "Sign In to add a Pet", Toast.LENGTH_SHORT).show();
+            this.petsFragment.signInToast();
         }
     }
 

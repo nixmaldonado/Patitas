@@ -3,7 +3,7 @@ package com.example.patitas.petcreator;
 import com.example.patitas.BasePresenter;
 import com.example.patitas.BaseView;
 
-public interface PetCreatorContract {
+interface PetCreatorContract {
 
     interface View extends BaseView<Presenter>{
 
@@ -15,7 +15,7 @@ public interface PetCreatorContract {
     }
     interface Presenter extends BasePresenter{
 
-        void createPet(String name, String imageUri);
+        void createPet(String name, String imageUri, String currentUserId, String userName);
 
     }
 }

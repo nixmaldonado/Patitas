@@ -2,7 +2,7 @@ package com.example.patitas.petdetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.support.v7.widget.Toolbar;
 
 import com.example.patitas.R;
 import com.example.patitas.pets.PetsFragment;
@@ -35,11 +35,7 @@ public class PetDetailActivity extends AppCompatActivity {
                 petId,
                 Injection.providePetsRepository(),
                 petDetailFragment);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.menu_detail, menu);
-        return true;
+        this.setSupportActionBar((Toolbar) this.findViewById(R.id.detail_toolbar));
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

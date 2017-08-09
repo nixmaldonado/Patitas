@@ -1,12 +1,14 @@
 <resources>
 
 
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorBackground">@color/grey_100</item>
+        <item name="colorAccent">@android:color/holo_green_dark</item>
+        <item name="android:colorBackground">@android:color/background_light</item>
         <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -48,6 +50,16 @@
         <item name="android:layout_marginRight">4dp</item>
         <item name="android:layout_marginLeft">4dp</item>
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppThemeLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_24dp</item>
+        <item name="colorPrimary">@color/primary_material_light_1</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen
+        </item>
     </style>
 
 

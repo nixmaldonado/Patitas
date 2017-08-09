@@ -2,13 +2,14 @@ package com.example.patitas.petcreator;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.support.v7.widget.Toolbar;
 
 import com.example.patitas.R;
 import com.example.patitas.util.ActivityUtils;
 import com.example.patitas.util.Injection;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PetCreatorActivity extends AppCompatActivity {
 
@@ -17,18 +18,16 @@ public class PetCreatorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_editor);
+        this.setContentView(R.layout.activity_creator);
         ButterKnife.bind(this);
 
         this.setFragment();
 
         new PetCreatorPresenter(Injection.providePetsRepository(), this.petCreatorFragment);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.menu_editor, menu);
-        return true;
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.creator_toolbar);
+        toolbar.setTitle(this.getString(R.string.add_new_pet));
+        this.setSupportActionBar(toolbar);
     }
 
     private void setFragment() {
@@ -40,5 +39,10 @@ public class PetCreatorActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(this.getSupportFragmentManager(),
                     this.petCreatorFragment, R.id.contentFrame);
         }
+    }
+
+    @OnClick(R.id.done_creating)
+    public void create_pet(){
+        this.petCreatorFragment.done();
     }
 }

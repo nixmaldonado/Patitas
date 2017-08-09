@@ -59,7 +59,7 @@ public class PetsAdapter extends BaseAdapter {
         Pet pet = this.getItem(position);
 
         TextView petName = (TextView) view.findViewById(R.id.pet_name);
-        petName.setText(pet.getName());
+        petName.setText(pet.getPetName());
 
         ImageView petImage = (ImageView) view.findViewById(R.id.pet_image);
         Glide.with(petImage.getContext())

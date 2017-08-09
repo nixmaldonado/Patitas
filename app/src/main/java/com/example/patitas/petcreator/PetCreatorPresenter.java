@@ -22,12 +22,12 @@ class PetCreatorPresenter implements PetCreatorContract.Presenter {
     }
 
     @Override
-    public void createPet(String name, String imageUri) {
+    public void createPet(String name, String imageUri, String currentUserId, String petUserName) {
         if (!this.hasRequiredInput(name, imageUri)) {
             this.view.triggerToast(R.string.provide_fields);
             return;
         }
-        this.petsRepository.savePet(new Pet(name, imageUri));
+        this.petsRepository.savePet(new Pet(name, imageUri, currentUserId, petUserName));
     }
 
 

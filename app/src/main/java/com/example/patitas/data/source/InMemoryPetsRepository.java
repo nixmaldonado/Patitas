@@ -8,14 +8,14 @@ import java.util.Map;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class InMemoryPetsRepository implements PetsRepository {
+class InMemoryPetsRepository implements PetsRepository {
 
-    public static final InMemoryPetsRepository INSTANCE = new InMemoryPetsRepository();
+    private static final InMemoryPetsRepository INSTANCE = new InMemoryPetsRepository();
 
     private Map<String, Pet> pets = new HashMap<>();
 
     private InMemoryPetsRepository() {
-        Pet pet = new Pet("Arturito", "");
+        Pet pet = new Pet("Arturito", "", "testUserId", "testUserName");
         pet.setRemoteImageUri("");
         pet.setId("1");
 

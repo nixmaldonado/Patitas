@@ -19,23 +19,32 @@ public class Pet implements Parcelable {
 
     private String id;
 
-    private String name;
+    private String petName;
 
     private String localImageUri;
 
     private String remoteImageUri;
 
-    public Pet() {}
+    private String userId;
 
-    public Pet(final String name, final String localImageUri) {
-        this.name = name;
+    private String petUserName;
+
+    public Pet() {
+    }
+
+    public Pet(final String name, final String localImageUri, final String userId, final String petUserName) {
+        this.petName = name;
+        this.userId = userId;
         this.localImageUri = localImageUri;
+        this.petUserName = petUserName;
     }
 
     protected Pet(Parcel input) {
-        this.name = input.readString();
+        this.petName = input.readString();
+        this.userId = input.readString();
         this.remoteImageUri = input.readString();
         this.localImageUri = input.readString();
+        this.petUserName = input.readString();
     }
 
     public void setRemoteImageUri(String remoteImageUri) {
@@ -46,10 +55,16 @@ public class Pet implements Parcelable {
         this.id = id;
     }
 
-    public String getId(){ return this.id; }
+    public String getId() {
+        return this.id;
+    }
 
-    public String getName() {
-        return this.name;
+    public String getUserId() {
+        return this.userId;
+    }
+
+    public String getPetName() {
+        return this.petName;
     }
 
     public String getRemoteImageUri() {
@@ -60,6 +75,8 @@ public class Pet implements Parcelable {
         return this.localImageUri;
     }
 
+    public String getPetUserName(){ return this.petUserName; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -67,9 +84,10 @@ public class Pet implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
+        dest.writeString(this.petName);
         dest.writeString(this.remoteImageUri);
         dest.writeString(this.localImageUri);
+        dest.writeString(this.userId);
     }
 
     @Override

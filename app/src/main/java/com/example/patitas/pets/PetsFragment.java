@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.patitas.R;
 import com.example.patitas.petdetail.PetDetailActivity;
@@ -28,16 +29,6 @@ public class PetsFragment extends Fragment implements PetsContract.View {
     ListView petsList;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt("value", 1);
     }
@@ -55,6 +46,7 @@ public class PetsFragment extends Fragment implements PetsContract.View {
         this.setHasOptionsMenu(true);
 
         return root;
+
     }
 
     @OnItemClick(R.id.pets_list)
@@ -74,6 +66,10 @@ public class PetsFragment extends Fragment implements PetsContract.View {
     @Override
     public void setPresenter(PetsContract.Presenter presenter) {
         PetsFragment.presenter = checkNotNull(presenter);
+    }
+
+    public void signInToast(){
+        Toast.makeText(this.getActivity(), "Sign In to add a Pet", Toast.LENGTH_LONG).show();
     }
 
 }

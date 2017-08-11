@@ -15,7 +15,7 @@
         android:theme="@style/AppThemeLight">
 
         <activity
-            android:name=".pets.SplashAcivity"
+            android:name=".util.SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>

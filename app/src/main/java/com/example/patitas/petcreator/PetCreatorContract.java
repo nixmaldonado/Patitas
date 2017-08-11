@@ -15,7 +15,8 @@ interface PetCreatorContract {
     }
     interface Presenter extends BasePresenter{
 
-        void createPet(String name, String imageUri, String currentUserId, String userName);
+        void createPet(String name, String imageUri, String currentUserId, String userName,
+                       String phoneNumber, String description);
 
     }
 }

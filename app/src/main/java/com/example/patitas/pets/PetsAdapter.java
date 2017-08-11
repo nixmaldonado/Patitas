@@ -61,6 +61,9 @@ public class PetsAdapter extends BaseAdapter {
         TextView petName = (TextView) view.findViewById(R.id.pet_name);
         petName.setText(pet.getPetName());
 
+        TextView userName = (TextView) view.findViewById(R.id.list_posted_by);
+        userName.setText("Posted by: " + pet.getPetUserName());
+
         ImageView petImage = (ImageView) view.findViewById(R.id.pet_image);
         Glide.with(petImage.getContext())
                 .load(pet.getRemoteImageUri())

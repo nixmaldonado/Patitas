@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.example.patitas.R;
+import com.example.patitas.data.Pet;
 import com.example.patitas.pets.PetsFragment;
 import com.example.patitas.util.ActivityUtils;
-import com.example.patitas.util.Injection;
 
 import butterknife.ButterKnife;
 
@@ -29,12 +29,12 @@ public class PetDetailActivity extends AppCompatActivity {
                     this.getSupportFragmentManager(), petDetailFragment, R.id.contentFrame);
         }
 
-        String petId = this.getIntent().getStringExtra(PetsFragment.EXTRA_PET_ID);
+        Pet pet = this.getIntent().getParcelableExtra(PetsFragment.EXTRA_PET);
 
         new PetDetailPresenter(
-                petId,
-                Injection.providePetsRepository(),
+                pet,
                 petDetailFragment);
+
         this.setSupportActionBar((Toolbar) this.findViewById(R.id.detail_toolbar));
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

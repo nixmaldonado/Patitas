@@ -38,6 +38,12 @@ public class PetDetailFragment extends Fragment implements PetDetailContract.Vie
     @BindView(R.id.pet_detail_progress_bar)
     ProgressBar progressBar;
 
+    @BindView(R.id.pet_detail_phone)
+    TextView phoneView;
+
+    @BindView(R.id.pet_detail_description)
+    TextView descriptionView;
+
     public PetDetailFragment() {
     }
 
@@ -67,17 +73,21 @@ public class PetDetailFragment extends Fragment implements PetDetailContract.Vie
 
     @Override
     public void showPetDetail(Pet pet) {
+
         Glide.with(this.getActivity())
                 .load(pet.getRemoteImageUri())
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
-                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    public boolean onException(Exception e, String model,
+                                               Target<GlideDrawable> target, boolean isFirstResource) {
                         PetDetailFragment.this.progressBar.setVisibility(View.GONE);
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    public boolean onResourceReady(GlideDrawable resource, String model,
+                                                   Target<GlideDrawable> target,
+                                                   boolean isFromMemoryCache, boolean isFirstResource) {
                         PetDetailFragment.this.progressBar.setVisibility(View.GONE);
                         return false;
                     }
@@ -85,6 +95,8 @@ public class PetDetailFragment extends Fragment implements PetDetailContract.Vie
                 .into(this.imageView);
 
         this.nameView.setText(pet.getPetName());
-        this.userView.setText(String.format(getString(R.string.posted_by), pet.getPetUserName()));
+        this.userView.setText(String.format(this.getString(R.string.posted_by), pet.getPetUserName()));
+        this.phoneView.setText(pet.getUserPhone());
+        this.descriptionView.setText(pet.getPetDescription());
     }
 }

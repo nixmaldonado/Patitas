@@ -1,10 +1,12 @@
-package com.example.patitas.pets;
+package com.example.patitas.util;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class SplashAcivity extends AppCompatActivity {
+import com.example.patitas.pets.PetsActivity;
+
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

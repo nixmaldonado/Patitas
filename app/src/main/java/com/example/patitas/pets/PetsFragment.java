@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.patitas.R;
+import com.example.patitas.data.Pet;
 import com.example.patitas.petdetail.PetDetailActivity;
 
 import butterknife.BindView;
@@ -22,6 +23,8 @@ import static dagger.internal.Preconditions.checkNotNull;
 public class PetsFragment extends Fragment implements PetsContract.View {
 
     public static final String EXTRA_PET_ID = "petId";
+    public static final String EXTRA_PET = "pet";
+
 
     private static PetsContract.Presenter presenter;
 
@@ -54,11 +57,10 @@ public class PetsFragment extends Fragment implements PetsContract.View {
         presenter.openPetDetail(PetsAdapter.getInstance().getItem(position));
     }
 
-    @Override
-    public void showPetDetails(String petId) {
+    public void showPetDetails(Pet pet) {
         Intent intent = new Intent(this.getActivity(), PetDetailActivity.class);
 
-        intent.putExtra(EXTRA_PET_ID, petId);
+        intent.putExtra(EXTRA_PET, pet);
 
         this.startActivity(intent);
     }

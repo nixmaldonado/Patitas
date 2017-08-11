@@ -8,8 +8,9 @@ interface PetsContract {
 
     interface View extends BaseView<Presenter>{
 
-        void showPetDetails(String petId);
+        void showPetDetails(Pet pet);
     }
+
 
     interface Presenter extends BasePresenter{
 

@@ -22,5 +22,6 @@
     <string name="log_out">Log Out</string>
     <string name="add_new_pet">Add a new pet!</string>
     <string name="posted_by">Posted by: %1$s</string>
+    <string name="description">Description</string>
 
 </resources>

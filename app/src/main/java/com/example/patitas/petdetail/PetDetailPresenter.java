@@ -6,15 +6,21 @@ import com.example.patitas.data.source.PetsRepository;
 
 class PetDetailPresenter implements PetDetailContract.Presenter {
 
-    private final PetsRepository petsRepository;
 
     private final PetDetailContract.View view;
 
     private String petId;
+    private Pet pet;
 
     public PetDetailPresenter(String petId, PetsRepository petsRepository, PetDetailContract.View view) {
-        this.petsRepository = petsRepository;
         this.petId = petId;
+        this.view = view;
+
+
+    }
+
+    public PetDetailPresenter(Pet pet, PetDetailContract.View view){
+        this.pet = pet;
         this.view = view;
 
         view.setPresenter(this);
@@ -22,12 +28,7 @@ class PetDetailPresenter implements PetDetailContract.Presenter {
 
     @Override
     public void start() {
-        this.petsRepository.getPet(this.petId, new PetsRepository.LoadPetCallback() {
-
-            @Override
-            public void onPetLoaded(Pet pet) {
-                PetDetailPresenter.this.view.showPetDetail(pet);
-            }
-        });
+                PetDetailPresenter.this.view.showPetDetail(this.pet);
     }
-}
+ }
+

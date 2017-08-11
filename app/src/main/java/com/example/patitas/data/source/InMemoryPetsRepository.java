@@ -15,7 +15,8 @@ class InMemoryPetsRepository implements PetsRepository {
     private Map<String, Pet> pets = new HashMap<>();
 
     private InMemoryPetsRepository() {
-        Pet pet = new Pet("Arturito", "", "testUserId", "testUserName");
+        Pet pet = new Pet("Arturito", "", "testUserId", "testUserName", "testUserPhone",
+                "testUserDescription");
         pet.setRemoteImageUri("");
         pet.setId("1");
 

@@ -12,7 +12,6 @@ import com.example.patitas.auth.SignInActivity;
 import com.example.patitas.data.source.FirebasePetsRepository;
 import com.example.patitas.petcreator.PetCreatorActivity;
 import com.example.patitas.util.ActivityUtils;
-import com.example.patitas.util.Injection;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,7 +26,7 @@ public class PetsActivity extends AppCompatActivity  {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_pets);
-        new PetsPresenter(Injection.providePetsRepository(), this.petsFragment);
+        new PetsPresenter(this.petsFragment);
         ButterKnife.bind(this);
         this.addFragmentToPetActivity();
         FirebasePetsRepository.getInstance();

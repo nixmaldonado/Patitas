@@ -41,6 +41,12 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
     @BindView(R.id.image_input)
     protected ImageView imagePreview;
 
+    @BindView(R.id.phone_input)
+    protected EditText phoneEditText;
+
+    @BindView(R.id.description_input)
+    protected EditText descriptionEditText;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -54,7 +60,9 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
 
     public void done(){
         if (this.hasRequiredInput()){
-            this.presenter.createPet(this.getName(), this.getImageUri(), SignInActivity.getCurrentUserId(), SignInActivity.getUserName());
+            this.presenter.createPet(this.getName(), this.getImageUri(),
+                    SignInActivity.getCurrentUserId(), SignInActivity.getUserName(),
+                    this.getPhoneNumber(), this.getDescription());
             this.getActivity().finish();
         }else{
             this.triggerToast(R.string.provide_fields);
@@ -103,6 +111,10 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
     }
 
     public String getName(){ return this.nameEditText.getText().toString().trim(); }
+
+    public String getPhoneNumber(){return this.phoneEditText.getText().toString().trim();}
+
+    public String getDescription(){return this.descriptionEditText.getText().toString().trim();}
 
     public String getImageUri(){
         return this.imageUri.toString();

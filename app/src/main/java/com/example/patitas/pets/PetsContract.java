@@ -9,6 +9,8 @@ interface PetsContract {
     interface View extends BaseView<Presenter>{
 
         void showPetDetails(Pet pet);
+
+        void refreshView();
     }
 
 

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.patitas.pets.PetsActivity;
+import com.example.patitas.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -12,7 +12,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, PetsActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         this.startActivity(intent);
         this.finish();
     }

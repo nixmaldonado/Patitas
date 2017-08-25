@@ -1,5 +1,6 @@
 package com.example.patitas.util;
 
+import com.example.patitas.auth.AuthActivity;
 import com.example.patitas.data.Pet;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -10,17 +11,22 @@ public class FBPushOnSuccessListener implements OnSuccessListener<UploadTask.Tas
 
     private Pet pet;
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference petsDatabaseReference;
+    private DatabaseReference usersDatabaseReference;
 
-    public FBPushOnSuccessListener(final Pet pet, final DatabaseReference databaseReference) {
+    public FBPushOnSuccessListener(final Pet pet, final DatabaseReference petsDatabaseReference,
+                                   final DatabaseReference usersDatabaseReference) {
         this.pet = pet;
-        this.databaseReference = databaseReference;
+        this.petsDatabaseReference = petsDatabaseReference;
+        this.usersDatabaseReference = usersDatabaseReference;
     }
 
     @SuppressWarnings("VisibleForTests")
     @Override
     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
         this.pet.setRemoteImageUri(taskSnapshot.getDownloadUrl().toString());
-        this.databaseReference.push().setValue(this.pet);
+        this.petsDatabaseReference.push().setValue(this.pet);
+        this.usersDatabaseReference
+                .child(AuthActivity.getCurrentUserId()).push().setValue(this.pet);
     }
 }

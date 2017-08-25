@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Patitas</string>
+    <string name="action_settings">Configuración</string>
+    <string name="add_new_pet">Agregar una mascota nueva!</string>
+    <string name="auth_failed">La autenticación falló</string>
+    <string name="choose_a_picture">Elija una foto</string>
+    <string name="description">Descrpción</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="done">Listo</string>
+    <string name="edit_this_pet">Editar esta mascota</string>
+    <string name="howdy">Buenas!</string>
+    <string name="log_out">Desconectarse</string>
+    <string name="login">Conectarse</string>
+    <string name="name">Nombre</string>
+    <string name="no_pets">No hay mascotas para mostrar</string>
+    <string name="please_sign_in">Conectese para ver su información personal :D</string>
+    <string name="posted_by">Posteado por: %1$s</string>
+    <string name="provide_fields">Necesita una foto y un nombre</string>
+    <string name="publish_pet">Publicar Mascota</string>
+    <string name="sign_out">Desconectarse</string>
+    <string name="title_activity_detail">Detalle</string>
+    <string name="my_pets">Mis Mascotas</string>
+    <string name="dogs">Perros</string>
+    <string name="cats">Gatos</string>
+    <string name="hello">Hola</string>
+</resources>

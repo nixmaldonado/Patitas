@@ -2,8 +2,10 @@ package com.example.patitas.data.source;
 
 import android.net.Uri;
 
+import com.example.patitas.auth.AuthActivity;
 import com.example.patitas.data.Pet;
 import com.example.patitas.pets.PetsAdapter;
+import com.example.patitas.pets.UserPetsAdapter;
 import com.example.patitas.util.FBPushOnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,24 +20,30 @@ import java.util.List;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
-public class FirebasePetsRepository implements PetsRepository{
+public class FirebasePetsRepository implements PetsRepository {
 
     private static final FirebasePetsRepository INSTANCE = new FirebasePetsRepository();
 
     private static final String PET_PHOTOS = "pet_photos";
     private static final String PETS_REFERENCE = "pets";
-
-    private DatabaseReference databaseReference;
-    private StorageReference storageReference;
-
+    private static final String USERS_REFERENCE = "users";
     public List<Pet> pets;
-
+    private DatabaseReference petsDatabaseReference;
+    private DatabaseReference usersDatabaseReference;
+    private StorageReference storageReference;
+    private List<Pet> userPets;
 
     private FirebasePetsRepository() {
         this.pets = new ArrayList<>();
-        this.databaseReference = DatabaseUtils.getDatabase().getReference(PETS_REFERENCE);
+
         this.storageReference = FirebaseStorage.getInstance().getReference().child(PET_PHOTOS);
-        this.databaseReference.addChildEventListener(new ChildEventListener() {
+
+        this.usersDatabaseReference = DatabaseUtils.getDatabase().getReference().child(USERS_REFERENCE);
+
+        this.petsDatabaseReference = DatabaseUtils.getDatabase().getReference(PETS_REFERENCE);
+
+        this.petsDatabaseReference.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Pet pet = dataSnapshot.getValue(Pet.class);
@@ -43,7 +51,6 @@ public class FirebasePetsRepository implements PetsRepository{
 
                 FirebasePetsRepository.this.pets.add(pet);
                 PetsAdapter.getInstance().replaceData(FirebasePetsRepository.this.pets);
-                PetsAdapter.getInstance().notifyDataSetChanged();
             }
 
             @Override
@@ -82,12 +89,11 @@ public class FirebasePetsRepository implements PetsRepository{
         checkNotNull(callback);
 
         this.pets.clear();
-
     }
 
     @Override
     public void getPet(String petId, final LoadPetCallback callback) {
-        this.databaseReference.child(petId).addListenerForSingleValueEvent(new ValueEventListener(){
+        this.petsDatabaseReference.child(petId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onPetLoaded(dataSnapshot.getValue(Pet.class));
@@ -102,12 +108,51 @@ public class FirebasePetsRepository implements PetsRepository{
 
     @Override
     public void savePet(final Pet pet) {
-        Uri localImageUri = Uri.parse(pet.getLocalImageUri());
+        Uri imageUri = Uri.parse(pet.getLocalImageUri());
 
         this.storageReference
-                .child(localImageUri.getLastPathSegment())
-                .putFile(localImageUri)
-                .addOnSuccessListener(new FBPushOnSuccessListener(pet, this.databaseReference));
+                .child(imageUri.getLastPathSegment())
+                .putFile(imageUri)
+                .addOnSuccessListener(new FBPushOnSuccessListener(pet,
+                        this.petsDatabaseReference, this.usersDatabaseReference));
+    }
+
+    public DatabaseReference getUsersDatabaseReference() {
+        return this.usersDatabaseReference;
+    }
+
+    public void setListenerForUserPets() {
+        this.userPets = new ArrayList<>();
+        this.usersDatabaseReference.child(AuthActivity.getCurrentUserId())
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        FirebasePetsRepository.this.userPets.add(dataSnapshot.getValue(Pet.class));
+
+                        UserPetsAdapter.getInstance()
+                                .replacePetsData(FirebasePetsRepository.this.userPets);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
     }
 
 }

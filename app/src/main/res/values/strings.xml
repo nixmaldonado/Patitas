@@ -2,18 +2,17 @@
     <string name="app_name">Patitas</string>
     <string name="action_settings">Settings</string>
     <string name="provide_fields">Please provide name and image for the pet</string>
-    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_detail">Detail</string>
     <string name="no_pets">No pets to show</string>
     <string name="edit_this_pet">Edit this Pet</string>
 
     <string name="sign_out">Sign Out</string>
     <string name="disconnect">Disconnect</string>
     <string name="please_sign_in">Please sign in :D</string>
-    <string name="desc_firebase_lockup">Firebase logo and name</string>
     <string name="auth_failed">Authentication failed</string>
 
     <string name="login">Login</string>
-    <string name="oauth_id">564194372740-1bupmae15m56niid3qpsqrlu2sbq324p.apps.googleusercontent.com</string>
+    <string name="oauth_id" translatable="false">564194372740-1bupmae15m56niid3qpsqrlu2sbq324p.apps.googleusercontent.com</string>
     <string name="choose_a_picture">Choose a Picture</string>
     <string name="name">Name</string>
     <string name="howdy">Howdy!</string>
@@ -23,5 +22,10 @@
     <string name="add_new_pet">Add a new pet!</string>
     <string name="posted_by">Posted by: %1$s</string>
     <string name="description">Description</string>
+
+    <string name="dogs">Dogs</string>
+    <string name="cats">Cats</string>
+    <string name="my_pets">My Pets</string>
+    <string name="hello">Hello</string>
 
 </resources>

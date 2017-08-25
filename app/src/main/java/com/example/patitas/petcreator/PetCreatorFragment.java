@@ -1,8 +1,10 @@
 package com.example.patitas.petcreator;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +17,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.patitas.R;
-import com.example.patitas.auth.SignInActivity;
+import com.example.patitas.auth.AuthActivity;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,25 +31,22 @@ import static dagger.internal.Preconditions.checkNotNull;
 public class PetCreatorFragment extends Fragment implements PetCreatorContract.View {
 
     private static final int RC_PHOTO_PICKER = 1;
-
-    private PetCreatorContract.Presenter presenter;
-
-    private Uri imageUri;
-
     @BindView(R.id.name_input)
     protected EditText nameEditText;
-
     @BindView(R.id.gallery_input)
     protected Button galleryButton;
-
     @BindView(R.id.image_input)
     protected ImageView imagePreview;
-
     @BindView(R.id.phone_input)
     protected EditText phoneEditText;
-
     @BindView(R.id.description_input)
     protected EditText descriptionEditText;
+    private PetCreatorContract.Presenter presenter;
+    private Uri imageUri;
+
+    public static PetCreatorFragment newInstance() {
+        return new PetCreatorFragment();
+    }
 
     @Nullable
     @Override
@@ -61,7 +62,7 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
     public void done(){
         if (this.hasRequiredInput()){
             this.presenter.createPet(this.getName(), this.getImageUri(),
-                    SignInActivity.getCurrentUserId(), SignInActivity.getUserName(),
+                    AuthActivity.getCurrentUserId(), AuthActivity.getUserName(),
                     this.getPhoneNumber(), this.getDescription());
             this.getActivity().finish();
         }else{
@@ -72,10 +73,6 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
     @Override
     public void setPresenter(PetCreatorContract.Presenter presenter) {
         this.presenter = checkNotNull(presenter);
-    }
-
-    public static PetCreatorFragment newInstance() {
-        return new PetCreatorFragment();
     }
 
     @Override
@@ -98,6 +95,12 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK && data != null) {
             this.imageUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                        PetCreatorActivity.getContext().getContentResolver(), this.imageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Glide.with(this).load(this.imageUri).into(this.imagePreview);
 
@@ -123,5 +126,4 @@ public class PetCreatorFragment extends Fragment implements PetCreatorContract.V
     private boolean hasRequiredInput() {
         return (!this.nameEditText.getText().toString().isEmpty() && this.imageUri != null);
     }
-
 }

@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.patitas.R;
-import com.example.patitas.auth.SignInActivity;
+import com.example.patitas.auth.AuthActivity;
 import com.example.patitas.data.source.FirebasePetsRepository;
 import com.example.patitas.petcreator.PetCreatorActivity;
 import com.example.patitas.util.ActivityUtils;
@@ -25,7 +25,7 @@ public class PetsActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_pets);
+//        this.setContentView(R.layout.activity_pets);
         new PetsPresenter(this.petsFragment);
         ButterKnife.bind(this);
         this.addFragmentToPetActivity();
@@ -44,7 +44,7 @@ public class PetsActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_log_in){
-            Intent intent = new Intent(this, SignInActivity.class);
+            Intent intent = new Intent(this, AuthActivity.class);
             this.startActivityForResult(intent, 1);
         }
         return super.onOptionsItemSelected(item);
@@ -52,7 +52,7 @@ public class PetsActivity extends AppCompatActivity  {
 
     @OnClick(fab)
     protected void addPet() {
-        if(SignInActivity.isUserSignedIn()){
+        if (AuthActivity.isUserSignedIn()) {
             Intent editorIntent = new Intent(this, PetCreatorActivity.class);
             this.startActivityForResult(editorIntent, 1);
         }else{

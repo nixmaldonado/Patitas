@@ -1,7 +1,5 @@
 package com.example.patitas.pets;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +14,29 @@ import com.example.patitas.data.Pet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dagger.internal.Preconditions.checkNotNull;
+public class UserPetsAdapter extends BaseAdapter {
 
-public class PetsAdapter extends BaseAdapter {
-
-    private static final PetsAdapter INSTANCE = new PetsAdapter();
+    private static final UserPetsAdapter INSTANCE = new UserPetsAdapter();
     private static List pets = new ArrayList<>();
 
-    private PetsAdapter() {}
+    private UserPetsAdapter() {
+    }
 
-    public static PetsAdapter getInstance(){
+    public static UserPetsAdapter getInstance() {
         return INSTANCE;
     }
 
-    public void replaceData(List<Pet> pets) {
-        PetsAdapter.pets = checkNotNull(pets);
+    public static List getPetList() {
+        return pets;
+    }
+
+    public void replacePetsData(List pets) {
+        UserPetsAdapter.pets = pets;
+        this.notifyDataSetChanged();
+    }
+
+    public void clearPets() {
+        pets.clear();
         this.notifyDataSetChanged();
     }
 
@@ -49,13 +55,10 @@ public class PetsAdapter extends BaseAdapter {
         return position;
     }
 
-    @NonNull
     @Override
-    public View getView(int position, View view, @NonNull ViewGroup parent) {
-        Context context = parent.getContext();
-
+    public View getView(int position, View view, ViewGroup parent) {
         if (view == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             view = inflater.inflate(R.layout.pet_item, parent, false);
         }
 
@@ -65,8 +68,7 @@ public class PetsAdapter extends BaseAdapter {
         petName.setText(pet.getPetName());
 
         TextView userName = (TextView) view.findViewById(R.id.list_posted_by);
-        userName.setText(context.getString(R.string.posted_by,
-                " " + pet.getPetUserName()));
+        userName.setText(parent.getContext().getString(R.string.posted_by, " " + pet.getPetUserName()));
 
         ImageView petImage = (ImageView) view.findViewById(R.id.pet_image);
         Glide.with(petImage.getContext())

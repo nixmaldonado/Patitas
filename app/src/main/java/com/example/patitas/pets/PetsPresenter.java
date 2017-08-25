@@ -1,6 +1,7 @@
 package com.example.patitas.pets;
 
 import com.example.patitas.data.Pet;
+import com.example.patitas.data.source.FirebasePetsRepository;
 
 import static dagger.internal.Preconditions.checkNotNull;
 
@@ -21,6 +22,8 @@ class PetsPresenter implements PetsContract.Presenter {
 
     @Override
     public void start() {
-
+        FirebasePetsRepository.getInstance();
     }
+
+
 }

@@ -22,14 +22,15 @@ import static dagger.internal.Preconditions.checkNotNull;
 
 public class PetsFragment extends Fragment implements PetsContract.View {
 
-    public static final String EXTRA_PET_ID = "petId";
     public static final String EXTRA_PET = "pet";
-
 
     private static PetsContract.Presenter presenter;
 
     @BindView(R.id.pets_list)
     ListView petsList;
+
+    public PetsFragment() {
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -43,13 +44,14 @@ public class PetsFragment extends Fragment implements PetsContract.View {
         View root = inflater.inflate(R.layout.activity_pets_fragment, container, false);
         ButterKnife.bind(this, root);
 
+        new PetsPresenter(this);
+        presenter.start();
 
         this.petsList.setAdapter(PetsAdapter.getInstance());
 
         this.setHasOptionsMenu(true);
 
         return root;
-
     }
 
     @OnItemClick(R.id.pets_list)
@@ -63,6 +65,11 @@ public class PetsFragment extends Fragment implements PetsContract.View {
         intent.putExtra(EXTRA_PET, pet);
 
         this.startActivity(intent);
+    }
+
+    @Override
+    public void refreshView() {
+
     }
 
     @Override

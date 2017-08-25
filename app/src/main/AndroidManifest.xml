@@ -16,8 +16,8 @@
 
         <activity
             android:name=".util.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,6 +26,10 @@
 
         <activity android:name=".pets.PetsActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".petcreator.PetCreatorActivity"
@@ -38,7 +42,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".auth.SignInActivity"
+            android:name=".auth.AuthActivity"
             android:parentActivityName=".pets.PetsActivity"
             android:screenOrientation="portrait" />
 

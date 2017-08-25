@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.patitas.R;
+import com.example.patitas.data.source.FirebasePetsRepository;
+import com.example.patitas.pets.UserPetsAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,15 +33,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class SignInActivity extends AppCompatActivity implements
+public class AuthActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
     private static final String TAG = "GoogleActivity";
     private static final int RC_SIGN_IN = 9001;
-    private GoogleApiClient mGoogleApiClient;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static FirebaseUser firebaseUser = mAuth.getCurrentUser();
+    private GoogleApiClient mGoogleApiClient;
     private String userName;
 
     private TextView titleText;
@@ -47,10 +49,22 @@ public class SignInActivity extends AppCompatActivity implements
     private SignInButton signInButton;
     private ProgressBar progressBar;
 
+    public static boolean isUserSignedIn() {
+        return firebaseUser != null;
+    }
+
+    public static String getCurrentUserId() {
+        return firebaseUser.getUid();
+    }
+
+    public static String getUserName() {
+        return firebaseUser.getDisplayName();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_sign_in);
+        this.setContentView(R.layout.activity_auth);
 
         this.titleText = (TextView) this.findViewById(R.id.sign_in_title_text);
         this.subtitleText = (TextView) this.findViewById(R.id.sign_in_subtitle);
@@ -88,10 +102,10 @@ public class SignInActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
-        if (firebaseUser != null) {
-            this.updateUIForSignIn(firebaseUser.getDisplayName());
-        } else {
+        if (firebaseUser == null) {
             this.updateUIForSignOut();
+        } else {
+            this.updateUIForSignIn(firebaseUser.getDisplayName());
         }
     }
 
@@ -101,10 +115,6 @@ public class SignInActivity extends AppCompatActivity implements
             this.signOut();
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static boolean isUserSignedIn() {
-        return firebaseUser != null;
     }
 
     @Override
@@ -143,12 +153,13 @@ public class SignInActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            SignInActivity.this.userName = account.getDisplayName();
+                            AuthActivity.this.userName = account.getDisplayName();
                             firebaseUser = mAuth.getCurrentUser();
-                            SignInActivity.this.updateUIForSignIn(SignInActivity.this.userName);
-                            SignInActivity.this.finish();
+                            AuthActivity.this.updateUIForSignIn(AuthActivity.this.userName);
+                            FirebasePetsRepository.getInstance().setListenerForUserPets();
+                            AuthActivity.this.finish();
                         } else {
-                            Toast.makeText(SignInActivity.this, R.string.auth_failed,
+                            Toast.makeText(AuthActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -163,9 +174,10 @@ public class SignInActivity extends AppCompatActivity implements
 
     private void updateUIForSignIn(String displayName) {
         this.signInButton.setVisibility(View.GONE);
-        this.subtitleText.setVisibility(View.INVISIBLE);
-        this.progressBar.setVisibility(View.INVISIBLE);
-        this.titleText.setText("Hello " + displayName.split(" ")[0] + "!");
+        this.subtitleText.setVisibility(View.GONE);
+        this.progressBar.setVisibility(View.GONE);
+        this.titleText.setText(this.getString(R.string.hello) +
+                " " + displayName.split(" ")[0] + "!");
     }
 
     private void signOut() {
@@ -177,6 +189,7 @@ public class SignInActivity extends AppCompatActivity implements
                 });
         mAuth.signOut();
         firebaseUser = null;
+        UserPetsAdapter.getInstance().clearPets();
         this.updateUIForSignOut();
     }
 
@@ -185,13 +198,5 @@ public class SignInActivity extends AppCompatActivity implements
         this.subtitleText.setVisibility(View.VISIBLE);
         this.titleText.setText(R.string.howdy);
         this.subtitleText.setText(R.string.please_sign_in);
-    }
-
-    public static String getCurrentUserId() {
-        return firebaseUser.getUid();
-    }
-
-    public static String getUserName() {
-        return firebaseUser.getDisplayName();
     }
 }

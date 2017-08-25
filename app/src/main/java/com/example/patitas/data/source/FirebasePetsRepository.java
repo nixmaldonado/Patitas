@@ -49,7 +49,7 @@ public class FirebasePetsRepository implements PetsRepository {
                 Pet pet = dataSnapshot.getValue(Pet.class);
                 pet.setId(dataSnapshot.getKey());
 
-                FirebasePetsRepository.this.pets.add(pet);
+                FirebasePetsRepository.this.pets.add(0, pet);
                 PetsAdapter.getInstance().replaceData(FirebasePetsRepository.this.pets);
             }
 
@@ -127,7 +127,7 @@ public class FirebasePetsRepository implements PetsRepository {
                 .addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        FirebasePetsRepository.this.userPets.add(dataSnapshot.getValue(Pet.class));
+                        FirebasePetsRepository.this.userPets.add(0, dataSnapshot.getValue(Pet.class));
 
                         UserPetsAdapter.getInstance()
                                 .replacePetsData(FirebasePetsRepository.this.userPets);

@@ -23,7 +23,7 @@ public class Pet implements Parcelable {
     private String localImageUri;
     private String remoteImageUri;
     private String petUserName;
-    private String petUserPhone;
+    private String userPhone;
     private String petDescription;
 
     public Pet() {
@@ -31,12 +31,12 @@ public class Pet implements Parcelable {
 
     public Pet(final String name, final String localImageUri,
                final String userId, final String petUserName,
-               final String petUserPhone, final String petDescription) {
+               final String userPhone, final String petDescription) {
         this.petName = name;
         this.userId = userId;
         this.localImageUri = localImageUri;
         this.petUserName = petUserName;
-        this.petUserPhone = petUserPhone;
+        this.userPhone = userPhone;
         this.petDescription = petDescription;
     }
 
@@ -47,7 +47,7 @@ public class Pet implements Parcelable {
         this.remoteImageUri = in.readString();
         this.userId = in.readString();
         this.petUserName = in.readString();
-        this.petUserPhone = in.readString();
+        this.userPhone = in.readString();
         this.petDescription = in.readString();
     }
 
@@ -57,10 +57,6 @@ public class Pet implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUserId() {
-        return this.userId;
     }
 
     public String getPetName() {
@@ -83,7 +79,9 @@ public class Pet implements Parcelable {
         return this.petUserName;
     }
 
-    public String getUserPhone(){return this.petUserPhone;}
+    public String getUserPhone() {
+        return this.userPhone;
+    }
 
     public String getPetDescription(){return this.petDescription;}
 
@@ -106,7 +104,7 @@ public class Pet implements Parcelable {
         dest.writeString(this.remoteImageUri);
         dest.writeString(this.userId);
         dest.writeString(this.petUserName);
-        dest.writeString(this.petUserPhone);
+        dest.writeString(this.userPhone);
         dest.writeString(this.petDescription);
     }
 }
